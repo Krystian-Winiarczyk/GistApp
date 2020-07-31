@@ -16,18 +16,20 @@ export class AddGistComponent implements OnInit {
   }
 
   onChange(event) {
+    this.files = [];
     const files = event.target.files;
     if (files) {
-      for (let i = 0; i < files.length; i++) {
+      for (let file of files) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
-          console.log(e);
           this.files.push({
-            filenames: "tak",
-            content: e.target.result
+            filenames: file.name,
+            content: e.target.result,
+            lastModified: file.lastModified,
+            size: file.size
           })
         };
-        reader.readAsText(files[i]);
+        reader.readAsText(file);
       }
     }
   }

@@ -1,9 +1,22 @@
-<label for="desc">
-  Description
-  <textarea id="desc" [(ngModel)]="description"></textarea>
-</label>
-<label for="files">
-  Files
-  <input type="file" multiple id="files" (change)="onChange($event)" />
-</label>
-<button (click)="onTest()">Test</button>
+<div class="container">
+  <div class="col-8 mx-auto">
+    <h1>Create New Gist</h1>
+      <div class="form-group">
+        <label for="description">Gist Description</label>
+        <textarea class="form-control" id="description" rows="2" [(ngModel)]="description"></textarea>
+      </div>
+      <div class="input-group my-2">
+        <div class="custom-file">
+          <label class="custom-file-label" for="files">Choose files</label>
+          <input type="file" class="custom-file-input" id="files" (change)="onChange($event)" multiple>
+        </div>
+      </div>
+      <div class="list-group col-8">
+        <button class="list-group-item list-group-item-action" type="button" *ngFor="let file of files">
+          {{ file.filenames }}
+        </button>
+
+      </div>
+      <button (click)="onTest()">Test</button>
+  </div>
+</div>
