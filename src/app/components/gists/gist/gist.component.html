@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">
+      <img [src]="gist.owner.avatar_url" style="width: 40px; height: 40px" />
+      {{ gist.owner.login }}
+    </h5>
+    <p class="card-text" *ngIf="gist.description != ''; else nocontent">
+      {{ gist.description }}
+    </p>
+    <ng-template #nocontent>
+      <div class="alert alert-info">Gist don't have description</div>
+    </ng-template>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">
+      <span>{{ gist.created_at | date: 'medium' }}</span>
+      <a [routerLink]="['gist', gist.id]" class="btn btn-sm btn-secondary float-right">Details</a>
+    </small>
+  </div>
+</div>

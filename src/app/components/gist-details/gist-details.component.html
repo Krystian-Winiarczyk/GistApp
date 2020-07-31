@@ -1,0 +1,56 @@
+<div *ngIf="loading; else details">
+  Loading ...
+</div>
+
+<ng-template #details>
+  <div class="row mt-4">
+    <div class="w-100 custom-card col-10 mx-auto">
+      <div class="bg-dark text-white p-2">
+        <div class="row">
+          <div class="mr-3 col" style="max-width: 100px">
+            <img [src]="currentGist.owner.avatar_url" style="width: 100px; height: 100px"/>
+          </div>
+          <div class="col-sm">
+            <h2>{{ currentGist.owner.login }}</h2>
+            <h6 class="text-muted"><span style="font-weight: bold; color: #727b83">Gist id:</span> {{ currentGist.id }}
+            </h6>
+            <h6 class="text-muted"><span
+              style="font-weight: bold; color: #727b83">Gist created at:</span> {{ currentGist.created_at |  date: 'medium' }}
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-sm-12 col-lg-4 col-md-12 my-3" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+          <h2 class="h2">Files</h2>
+          <table class="table">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">File Name</th>
+              <th scope="col">Language</th>
+              <th scope="col">Raw Url</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let file of currentGist.files">
+              <td *ngIf="file.filename.length >= 10">{{ file.filename.slice(0, 10) }} ...</td>
+              <td *ngIf="file.filename.length <= 10">{{ file.filename }}</td>
+              <td>{{ file.language }}</td>
+              <td style="min-width: 100px">
+                <a [href]="file.raw_url" class="btn btn-sm btn-secondary">Raw</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-12 col-lg-4 col-md-12 my-3" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+          <h2 class="h2">Commits</h2>
+        </div>
+        <div class="col-sm-12 col-lg-4 col-md-12 my-3" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+          <h2 class="h2">Comments</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button (click)="delete()">XDDD</button>
+</ng-template>

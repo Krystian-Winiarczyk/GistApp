@@ -1,0 +1,9 @@
+<label for="desc">
+  Description
+  <textarea id="desc" [(ngModel)]="description"></textarea>
+</label>
+<label for="files">
+  Files
+  <input type="file" multiple id="files" (change)="onChange($event)" />
+</label>
+<button (click)="onTest()">Test</button>

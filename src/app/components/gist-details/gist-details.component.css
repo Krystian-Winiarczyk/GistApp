@@ -1,0 +1,5 @@
+.custom-card {
+  border: 2px solid rgb(52, 58, 64);
+  box-shadow: 1px 1px 7px rgb(52, 58, 64);
+  padding: 5px;
+}
