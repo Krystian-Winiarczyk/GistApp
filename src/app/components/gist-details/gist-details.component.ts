@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GistsService} from '../../services/gists.service';
 import {faEdit, faSave, faTrash} from '@fortawesome/free-solid-svg-icons';
 
@@ -18,7 +18,7 @@ export class GistDetailsComponent implements OnInit {
   loading: boolean = true;
   isEdited: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private gistsService: GistsService) { }
+  constructor(private activatedRoute: ActivatedRoute, private gistsService: GistsService, private router: Router) { }
 
   ngOnInit(): void {
     this.gistsService.getGist(this.activatedRoute.snapshot.params.gist_id)
@@ -29,14 +29,14 @@ export class GistDetailsComponent implements OnInit {
           files.push(res.files[fileName]);
         }
         response.files = files;
-        console.log(response);
         this.currentGist = response;
         this.loading = false;
       })
   }
 
   deleteGist() {
-    this.gistsService.deleteGist(this.currentGist.id)
+    this.gistsService.deleteGist(this.currentGist.id);
+    this.router.navigate(['/']);
   }
 
   saveEditedGist() {

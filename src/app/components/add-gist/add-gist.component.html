@@ -11,11 +11,16 @@
           <input type="file" class="custom-file-input" id="files" (change)="onChange($event)" multiple>
         </div>
       </div>
-      <div class="list-group col-8">
-        <button class="list-group-item list-group-item-action" type="button" *ngFor="let file of files">
-          {{ file.filename }}
-        </button>
+      <div class="list-group col-12 my-2" style="padding: 0">
+        <div class="list-group-item" type="button" *ngFor="let file of files; let i = index">
+          <div class="row">
+            <span class="col-10 align-middle">{{ file.filename }}</span>
+            <button class="btn btn-sm btn-danger col-2 float-right" (click)="files.splice(i, 1)">
+              <fa-icon [icon]="deleteIcon"></fa-icon>
+            </button>
+          </div>
+        </div>
       </div>
-      <button (click)="onTest()">Test</button>
+      <button class="btn btn-success" (click)="createGist()">Create Gist</button>
   </div>
 </div>

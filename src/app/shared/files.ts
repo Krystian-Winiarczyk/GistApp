@@ -17,7 +17,11 @@ export const fileUpload = (files) => {
   return filesArray;
 };
 
-export const prepareFiles = (files: []) => {
-
+export const prepareFiles = (files) => {
+  const preparedFiles = {};
+  for (let file of files) {
+    preparedFiles[file.filename] = file;
+  }
+  return preparedFiles;
 };
 
