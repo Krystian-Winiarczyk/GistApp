@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GistsService {
-  private token = '71bad1cae7ce33324721d56d2bf12c8be85da501';
+  private token = '265e9660f996c80a92e998c1b184ce28a394a1d4';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -35,6 +35,7 @@ export class GistsService {
   }
 
   createGist(payload) {
+    console.log(this.token);
     this.httpClient.post(`https://api.github.com/gists`, payload, {
       headers: {
         "Authorization": 'token ' + this.token,

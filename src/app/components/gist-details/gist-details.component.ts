@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GistsService} from '../../services/gists.service';
-import {faEdit, faSave, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faEdit, faPlus, faSave, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {fileUpload, prepareFiles} from '../../shared/files';
 
 @Component({
   selector: 'app-gist-details',
@@ -12,11 +13,13 @@ export class GistDetailsComponent implements OnInit {
   private icons = {
     edit: faEdit,
     delete: faTrash,
-    save: faSave
+    save: faSave,
+    plus: faPlus
   };
   currentGist: any = null;
   loading: boolean = true;
   isEdited: boolean = false;
+  newFiles: any[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private gistsService: GistsService, private router: Router) { }
 
@@ -41,18 +44,18 @@ export class GistDetailsComponent implements OnInit {
 
   saveEditedGist() {
     this.isEdited = false;
-    const files: {} = {};
-    for (let file of this.currentGist.files) {
-      files[file.filename] = file;
-    }
+    const files: {} = prepareFiles(this.currentGist.files);
 
     const editedGistPayload = {
       description: this.currentGist.description,
       files,
       public: true
     };
-
     console.log(editedGistPayload);
+  }
+
+  onChange(event) {
+    this.newFiles = fileUpload(event.target.files);
   }
 
 }

@@ -14,7 +14,8 @@
               </div>
               <div class="col-sm">
                 <h2>{{ currentGist.owner.login }}</h2>
-                <h6 class="text-muted"><span style="font-weight: bold; color: #727b83">Gist id:</span> {{ currentGist.id }}
+                <h6 class="text-muted"><span
+                  style="font-weight: bold; color: #727b83">Gist id:</span> {{ currentGist.id }}
                 </h6>
                 <h6 class="text-muted"><span
                   style="font-weight: bold; color: #727b83">Gist created at:</span> {{ currentGist.created_at |  date: 'medium' }}
@@ -24,19 +25,22 @@
           </div>
           <div class="col-12 col-sm-8 col-lg-4" *ngIf="currentGist.owner.id === 60285375">
             <div class="row d-flex justify-content-lg-end align-content-md-start align-items-center px-3 py-2 h-50">
-              <button class="btn btn-outline-warning w-50 flex-end" style="min-width: 100px; max-width: 150px" *ngIf="!isEdited; else save" (click)="isEdited = true">
+              <button class="btn btn-outline-warning w-50 flex-end" style="min-width: 100px; max-width: 150px"
+                      *ngIf="!isEdited; else save" (click)="isEdited = true">
                 <fa-icon [icon]="icons.edit"></fa-icon>
                 Edit
               </button>
               <ng-template #save>
-                <button class="btn btn-outline-success w-50 flex-end" style="min-width: 100px; max-width: 150px" (click)="saveEditedGist()">
+                <button class="btn btn-outline-success w-50 flex-end" style="min-width: 100px; max-width: 150px"
+                        (click)="saveEditedGist()">
                   <fa-icon [icon]="icons.save"></fa-icon>
                   Save
                 </button>
               </ng-template>
             </div>
             <div class="row d-flex justify-content-lg-end align-content-md-start align-items-center px-3 py-2 h-50">
-              <button class="btn btn-outline-danger w-50 flex-end" style="min-width: 100px; max-width: 150px" (click)="deleteGist()">
+              <button class="btn btn-outline-danger w-50 flex-end" style="min-width: 100px; max-width: 150px"
+                      (click)="deleteGist()">
                 <fa-icon [icon]="icons.delete"></fa-icon>
                 Delete
               </button>
@@ -49,10 +53,11 @@
           <div class="alert alert-info">
             <h3>Description</h3>
             <p *ngIf="!isEdited">{{ currentGist.description }}</p>
-            <input [(ngModel)]="currentGist.description" *ngIf="isEdited" />
+            <input [(ngModel)]="currentGist.description" *ngIf="isEdited" class="form-control w-100"/>
           </div>
         </div>
-        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center"
+             style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
           <h2 class="h2">Files</h2>
           <table class="table">
             <thead class="thead-dark">
@@ -79,8 +84,23 @@
             </tr>
             </tbody>
           </table>
+          <div *ngIf="isEdited">
+            <label class="btn btn-success rounded-circle">
+              <input type="file" multiple style="display: none" (change)="onChange($event)">
+              <fa-icon [icon]="icons.plus"></fa-icon>
+            </label>
+            <div class="list-group-item" type="button" *ngFor="let file of newFiles; let i = index">
+              <div class="row">
+                <span class="col-10 align-middle">{{ file.filename }}</span>
+                <button class="btn btn-sm btn-danger col-2 float-right" (click)="newFiles.splice(i, 1)">
+                  <fa-icon [icon]="icons.delete"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center"
+             style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
           <h2 class="h2">Comments</h2>
         </div>
       </div>
