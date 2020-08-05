@@ -11,6 +11,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {GistComponent} from './components/gists/gist/gist.component';
 import {GistDetailsComponent} from './components/gist-details/gist-details.component';
 import {FormsModule} from '@angular/forms';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {path: '', component: GistsComponent},
@@ -27,13 +28,14 @@ const routes: Routes = [
     GistComponent,
     GistDetailsComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    NgxPaginationModule,
-    RouterModule.forRoot(routes),
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        NgxPaginationModule,
+        RouterModule.forRoot(routes),
+        FormsModule,
+        FontAwesomeModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -13,9 +13,8 @@
       </div>
       <div class="list-group col-8">
         <button class="list-group-item list-group-item-action" type="button" *ngFor="let file of files">
-          {{ file.filenames }}
+          {{ file.filename }}
         </button>
-
       </div>
       <button (click)="onTest()">Test</button>
   </div>

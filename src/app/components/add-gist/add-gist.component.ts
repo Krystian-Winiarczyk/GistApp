@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GistsService} from '../../services/gists.service';
+import {fileUpload} from '../../shared/files';
 
 @Component({
   selector: 'app-add-gist',
@@ -8,7 +9,7 @@ import {GistsService} from '../../services/gists.service';
 })
 export class AddGistComponent implements OnInit {
   description: string = '';
-  files: any[] = [];
+  files = [];
 
   constructor(private gistsService: GistsService) { }
 
@@ -16,22 +17,7 @@ export class AddGistComponent implements OnInit {
   }
 
   onChange(event) {
-    this.files = [];
-    const files = event.target.files;
-    if (files) {
-      for (let file of files) {
-        let reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.files.push({
-            filenames: file.name,
-            content: e.target.result,
-            lastModified: file.lastModified,
-            size: file.size
-          })
-        };
-        reader.readAsText(file);
-      }
-    }
+    this.files = fileUpload(event.target.files);
   }
 
   onTest() {

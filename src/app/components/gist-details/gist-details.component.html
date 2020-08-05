@@ -7,50 +7,83 @@
     <div class="w-100 custom-card col-10 mx-auto">
       <div class="bg-dark text-white p-2">
         <div class="row">
-          <div class="mr-3 col" style="max-width: 100px">
-            <img [src]="currentGist.owner.avatar_url" style="width: 100px; height: 100px"/>
+          <div class="col-12 col-sm-12 col-lg-8">
+            <div class="row">
+              <div class="mr-3 col" style="max-width: 100px">
+                <img [src]="currentGist.owner.avatar_url" style="width: 100px; height: 100px"/>
+              </div>
+              <div class="col-sm">
+                <h2>{{ currentGist.owner.login }}</h2>
+                <h6 class="text-muted"><span style="font-weight: bold; color: #727b83">Gist id:</span> {{ currentGist.id }}
+                </h6>
+                <h6 class="text-muted"><span
+                  style="font-weight: bold; color: #727b83">Gist created at:</span> {{ currentGist.created_at |  date: 'medium' }}
+                </h6>
+              </div>
+            </div>
           </div>
-          <div class="col-sm">
-            <h2>{{ currentGist.owner.login }}</h2>
-            <h6 class="text-muted"><span style="font-weight: bold; color: #727b83">Gist id:</span> {{ currentGist.id }}
-            </h6>
-            <h6 class="text-muted"><span
-              style="font-weight: bold; color: #727b83">Gist created at:</span> {{ currentGist.created_at |  date: 'medium' }}
-            </h6>
+          <div class="col-12 col-sm-8 col-lg-4" *ngIf="currentGist.owner.id === 60285375">
+            <div class="row d-flex justify-content-lg-end align-content-md-start align-items-center px-3 py-2 h-50">
+              <button class="btn btn-outline-warning w-50 flex-end" style="min-width: 100px; max-width: 150px" *ngIf="!isEdited; else save" (click)="isEdited = true">
+                <fa-icon [icon]="icons.edit"></fa-icon>
+                Edit
+              </button>
+              <ng-template #save>
+                <button class="btn btn-outline-success w-50 flex-end" style="min-width: 100px; max-width: 150px" (click)="saveEditedGist()">
+                  <fa-icon [icon]="icons.save"></fa-icon>
+                  Save
+                </button>
+              </ng-template>
+            </div>
+            <div class="row d-flex justify-content-lg-end align-content-md-start align-items-center px-3 py-2 h-50">
+              <button class="btn btn-outline-danger w-50 flex-end" style="min-width: 100px; max-width: 150px">
+                <fa-icon [icon]="icons.delete"></fa-icon>
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row text-center">
-        <div class="col-sm-12 col-lg-4 col-md-12 my-3" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+      <div class="row">
+        <div class="col-sm-12 mt-1" *ngIf="currentGist.description != ''">
+          <div class="alert alert-info">
+            <h3>Description</h3>
+            <p *ngIf="!isEdited">{{ currentGist.description }}</p>
+            <input [(ngModel)]="currentGist.description" *ngIf="isEdited" />
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
           <h2 class="h2">Files</h2>
           <table class="table">
             <thead class="thead-dark">
             <tr>
               <th scope="col">File Name</th>
               <th scope="col">Language</th>
-              <th scope="col">Raw Url</th>
+              <th scope="col">Size</th>
+              <th scope="col" *ngIf="!isEdited">Raw Url</th>
+              <th scope="col" *ngIf="isEdited">Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let file of currentGist.files">
+            <tr *ngFor="let file of currentGist.files; let i = index">
               <td *ngIf="file.filename.length >= 10">{{ file.filename.slice(0, 10) }} ...</td>
-              <td *ngIf="file.filename.length <= 10">{{ file.filename }}</td>
+              <td *ngIf="file.filename.length < 10">{{ file.filename }}</td>
               <td>{{ file.language }}</td>
+              <td>{{ file.size }}</td>
               <td style="min-width: 100px">
-                <a [href]="file.raw_url" class="btn btn-sm btn-secondary">Raw</a>
+                <a [href]="file.raw_url" class="btn btn-sm btn-secondary" *ngIf="!isEdited">Raw</a>
+                <button class="btn btn-sm btn-danger" *ngIf="isEdited" (click)="currentGist.files.splice(i, 1)">
+                  <fa-icon [icon]="icons.delete"></fa-icon>
+                </button>
               </td>
             </tr>
             </tbody>
           </table>
         </div>
-        <div class="col-sm-12 col-lg-4 col-md-12 my-3" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
-          <h2 class="h2">Commits</h2>
-        </div>
-        <div class="col-sm-12 col-lg-4 col-md-12 my-3" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center" style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
           <h2 class="h2">Comments</h2>
         </div>
       </div>
     </div>
   </div>
-  <button (click)="delete()">XDDD</button>
 </ng-template>

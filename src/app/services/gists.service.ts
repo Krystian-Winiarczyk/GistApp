@@ -5,7 +5,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
   providedIn: 'root'
 })
 export class GistsService {
-  private token = 'f89d1c96ee4fea29d1f7688c16a75ac7d624e7ff';
+  private token = '2ab70e5fa28da1d12361e307cc973ea4fe6eabfe';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -37,24 +37,43 @@ export class GistsService {
   }
 
   createGist() {
-      this.httpClient.post(`https://api.github.com/gists`, {
-        description: "HEHEHE",
-        files: {
-          "test.txt": {
-            filenames: "nazwa",
-            content: "xdadsd"
-          }
-        },
-        public: true
-      }, {
-        headers: {
-          "Authorization": 'token ' + this.token,
-          'Accept': 'application/vnd.github.v3+json'
+    this.httpClient.post(`https://api.github.com/gists`, {
+      description: "Test",
+      files: {
+        "test.txt": {
+          filenames: "nazwa",
+          content: "content"
         }
+      },
+      public: true
+    }, {
+      headers: {
+        "Authorization": 'token ' + this.token,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    })
+      .subscribe(res => {
+        console.log(res);
       })
-        .subscribe(res => {
-          console.log(res);
-        })
-    }
+  }
+
+  // uploadFiles(files) {
+  //   const filesArray = [];
+  //   if (files) {
+  //     for (let file of files) {
+  //       let reader = new FileReader();
+  //       reader.onload = (e: any) => {
+  //         filesArray.push({
+  //           filename: file.name,
+  //           content: e.target.result,
+  //           lastModified: file.lastModified,
+  //           size: file.size
+  //         });
+  //       };
+  //       reader.readAsText(file);
+  //     }
+  //   }
+  //   return filesArray;
+  // }
 
 }
