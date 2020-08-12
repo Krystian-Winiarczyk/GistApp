@@ -5,14 +5,20 @@ import {HttpClient, HttpParams} from '@angular/common/http';
   providedIn: 'root'
 })
 export class GistsService {
-  private token = '265e9660f996c80a92e998c1b184ce28a394a1d4';
 
   constructor(private httpClient: HttpClient) { }
 
   getGists() {
-    return this.httpClient.get("https://api.github.com/gists", {
+    return this.httpClient.get("https://api.github.com/gists/public", {
       params: new HttpParams()
         .set("per_page", "100")
+    });
+  }
+
+  getUserGists(username: string) {
+    return this.httpClient.get(`https://api.github.com/users/${username}/gists`, {
+      params: new HttpParams()
+        .set("per_page", "20")
     });
   }
 
@@ -21,12 +27,7 @@ export class GistsService {
   }
 
   deleteGist(id: string) {
-    this.httpClient.delete(`https://api.github.com/gists/${id}`, {
-      headers: {
-        "Authorization": 'token ' + this.token,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    })
+    this.httpClient.delete(`https://api.github.com/gists/${id}`)
       .subscribe(xd => {
         console.log(xd);
       }, err => {
@@ -35,16 +36,12 @@ export class GistsService {
   }
 
   createGist(payload) {
-    console.log(this.token);
-    this.httpClient.post(`https://api.github.com/gists`, payload, {
-      headers: {
-        "Authorization": 'token ' + this.token,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    })
+    this.httpClient.post(`https://api.github.com/gists`, payload)
       .subscribe(res => {
         console.log(res);
       })
   }
-
 }
+// TODO
+// Dodać uwierzytelnianie poprzez podanie tokenu autoryzacji
+// pobrać dane usera przez /user
