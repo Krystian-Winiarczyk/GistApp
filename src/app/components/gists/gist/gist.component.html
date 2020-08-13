@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">
-      <img [src]="gist.owner.avatar_url" style="width: 40px; height: 40px" />
+    <h5 class="card-title card-link" [routerLink]="['/gists/user', gist.owner.login]">
+      <img [src]="gist.owner.avatar_url" style="width: 40px; height: 40px"  alt="Github user icon"/>
       {{ gist.owner.login }}
     </h5>
     <p class="card-text" *ngIf="gist.description != ''; else nocontent">
@@ -14,7 +14,7 @@
   <div class="card-footer">
     <small class="text-muted">
       <span>{{ gist.created_at | date: 'medium' }}</span>
-      <a [routerLink]="['gist', gist.id]" class="btn btn-sm btn-secondary float-right">Details</a>
+      <a [routerLink]="['/gists', gist.id]" class="btn btn-sm btn-secondary float-right">Details</a>
     </small>
   </div>
 </div>

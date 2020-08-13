@@ -39,11 +39,12 @@ export class GistDetailsComponent implements OnInit {
 
   deleteGist() {
     this.gistsService.deleteGist(this.currentGist.id);
-    this.router.navigate(['/']);
+    this.router.navigate(['/gists']);
   }
 
   saveEditedGist() {
     this.isEdited = false;
+    this.currentGist.files.push(...this.newFiles);
     const files: {} = prepareFiles(this.currentGist.files);
 
     const editedGistPayload = {
@@ -55,7 +56,8 @@ export class GistDetailsComponent implements OnInit {
   }
 
   onChange(event) {
-    this.newFiles = fileUpload(event.target.files);
+    const newFiles = fileUpload(event.target.files);
+    this.newFiles = newFiles;
   }
 
 }

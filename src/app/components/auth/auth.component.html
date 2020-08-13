@@ -1,0 +1,22 @@
+<div style="height: 100vh" class="d-flex justify-content-center align-items-center bg-dark">
+  <div class="card mb-3" style="max-width: 540px; height: 22%">
+    <div class="row no-gutters h-100" style="object-fit: cover">
+      <div class="col-md-4 col-4">
+        <img src="https://opensource.com/sites/default/files/styles/image-full-size/public/lead-images/github-universe.jpg?itok=lwRZddXA" class="card-img w-100 h-100" alt="..." style="object-fit: cover">
+      </div>
+      <div class="col-md-8 col-8">
+        <div class="card-body">
+          <h3 class="card-title">Enter Access Token</h3>
+          <p class="card-text">
+            <input type="text" class="form-control" placeholder="Token" aria-label="Token" [(ngModel)]="token"/>
+          </p>
+          <div class="card-text">
+            <button class="btn btn-dark btn-lg float-right mb-1" (click)="submit()" [disabled]="token === ''">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="error">Invalid token !</div>
+  </div>
+
+</div>

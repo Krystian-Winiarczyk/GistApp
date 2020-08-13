@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GistsService } from '../../services/gists.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-gists',
@@ -11,18 +12,22 @@ export class GistsComponent implements OnInit {
   gists: any = [];
   p: number = 1;
 
-  constructor(private gistsService: GistsService) { }
+  constructor(private gistsService: GistsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.gistsService.getGists()
-      .subscribe(res =>{
+    const username = this.activatedRoute.snapshot.params.user_name;
+    if (username) {
+      this.gistsService.getUserGists(username)
+        .subscribe(res =>{
           this.gists = res;
           this.loading = false;
-      })
-  }
-
-  test() {
-    const id = "f2a3edc906549ecc246fbfc7968c6e36";
-    this.gistsService.deleteGist(id);
+        });
+    } else {
+      this.gistsService.getGists()
+        .subscribe(res =>{
+          this.gists = res;
+          this.loading = false;
+        });
+    }
   }
 }

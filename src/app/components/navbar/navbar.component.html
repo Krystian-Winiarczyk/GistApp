@@ -1,13 +1,17 @@
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
   <!-- Navbar content -->
-  <a class="navbar-brand" href="#">Gistownia</a>
+  <a class="navbar-brand" [routerLink]="['/gists/user', currentUser?.login]">
+    <img [src]="currentUser?.avatar_url" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+    {{ currentUser?.login }}
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" routerLink="/">Gists <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link active" routerLink="/gists">Gists <span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link" routerLink="/add-gist">Create Gist</a>
     </div>
   </div>
+  <button (click)="logout()" class="btn btn-danger">Logout</button>
 </nav>
