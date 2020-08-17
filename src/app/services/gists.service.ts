@@ -5,7 +5,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
   providedIn: 'root'
 })
 export class GistsService {
-
   constructor(private httpClient: HttpClient) { }
 
   getGists() {
@@ -36,10 +35,7 @@ export class GistsService {
   }
 
   createGist(payload) {
-    this.httpClient.post(`https://api.github.com/gists`, payload)
-      .subscribe(res => {
-        console.log(res);
-      })
+    return this.httpClient.post(`https://api.github.com/gists`, payload);
   }
 }
 // TODO

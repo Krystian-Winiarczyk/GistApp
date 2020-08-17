@@ -61,3 +61,7 @@ export class GistDetailsComponent implements OnInit {
   }
 
 }
+
+//TODO
+// dodać opis w razie braku
+// filtr pustch plikow 
