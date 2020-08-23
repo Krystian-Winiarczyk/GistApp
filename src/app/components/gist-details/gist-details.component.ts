@@ -97,3 +97,7 @@ export class GistDetailsComponent implements OnInit, OnChanges {
 
 //TODO
 // dodać opis w razie braku
+<<<<<<< HEAD
+=======
+// filtr pustch plikow 
+>>>>>>> 55367726084731b7b2263c383e8b2d238042f16e
