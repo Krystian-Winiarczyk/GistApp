@@ -14,13 +14,16 @@ import {FormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { AuthComponent } from './components/auth/auth.component';
 import {HttpConfigInterceptor} from './intreceptors/httpconfig.interceptor';
+import {TooltipModule} from 'ng2-tooltip-directive';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   {path: '', component: AuthComponent},
-  {path: 'gists', component: GistsComponent},
-  {path: 'gists/:gist_id', component: GistDetailsComponent},
-  {path: 'gists/user/:user_name', component: GistsComponent},
-  {path: 'add-gist', component: AddGistComponent}
+  {path: 'gists', component: GistsComponent, canActivate: [ AuthGuard ]},
+  {path: 'gists/:gist_id', component: GistDetailsComponent, canActivate: [ AuthGuard ]},
+  {path: 'gists/user/:user_name', component: GistsComponent, canActivate: [ AuthGuard ]},
+  {path: 'add-gist', component: AddGistComponent, canActivate: [ AuthGuard ]}
 ];
 
 @NgModule({
@@ -31,7 +34,8 @@ const routes: Routes = [
     AddGistComponent,
     GistComponent,
     GistDetailsComponent,
-    AuthComponent
+    AuthComponent,
+    SpinnerComponent
   ],
     imports: [
         BrowserModule,
@@ -39,7 +43,8 @@ const routes: Routes = [
         NgxPaginationModule,
         RouterModule.forRoot(routes),
         FormsModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        TooltipModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }

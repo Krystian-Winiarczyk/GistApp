@@ -5,10 +5,10 @@ export const fileUpload = (files) => {
       let reader = new FileReader();
       reader.onload = (e: any) => {
         filesArray.push({
-          filename: file.name,
-          content: e.target.result,
-          lastModified: file.lastModified,
-          size: file.size
+          "filename": file.name,
+          "content": e.target.result,
+          "lastModified": file.lastModified,
+          "size": file.size
         });
       };
       reader.readAsText(file);
@@ -24,4 +24,3 @@ export const prepareFiles = (files) => {
   }
   return preparedFiles;
 };
-

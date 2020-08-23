@@ -1,5 +1,5 @@
 <div *ngIf="loading; else details">
-  Loading ...
+  <app-spinner></app-spinner>
 </div>
 
 <ng-template #details>
@@ -23,7 +23,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-8 col-lg-4" *ngIf="currentGist.owner.id === 60285375">
+          <div class="col-12 col-sm-8 col-lg-4" *ngIf="currentGist.owner.id === currentUserId">
             <div class="row d-flex justify-content-lg-end align-content-md-start align-items-center px-3 py-2 h-50">
               <button class="btn btn-outline-warning w-50 flex-end" style="min-width: 100px; max-width: 150px"
                       *ngIf="!isEdited; else save" (click)="isEdited = true">
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 mt-1" *ngIf="currentGist.description != ''">
+        <div class="col-sm-12 mt-1" *ngIf="currentGist.description != '' || isEdited">
           <div class="alert alert-info">
             <h3>Description</h3>
             <p *ngIf="!isEdited">{{ currentGist.description }}</p>
@@ -77,7 +77,7 @@
               <td>{{ file.size }}</td>
               <td style="min-width: 100px">
                 <a [href]="file.raw_url" class="btn btn-sm btn-secondary" *ngIf="!isEdited">Raw</a>
-                <button class="btn btn-sm btn-danger" *ngIf="isEdited" (click)="currentGist.files.splice(i, 1)">
+                <button class="btn btn-sm btn-danger" *ngIf="isEdited" (click)="deleteGistFile(i, file.filename)">
                   <fa-icon [icon]="icons.delete"></fa-icon>
                 </button>
               </td>
@@ -86,13 +86,21 @@
           </table>
           <div *ngIf="isEdited">
             <label class="btn btn-success rounded-circle">
-              <input type="file" multiple style="display: none" (change)="onChange($event)">
+              <input type="file" accept="text/*" multiple style="display: none" (change)="onChange($event)">
               <fa-icon [icon]="icons.plus"></fa-icon>
             </label>
             <div class="list-group-item" type="button" *ngFor="let file of newFiles; let i = index">
               <div class="row">
-                <span class="col-10 align-middle">{{ file.filename }}</span>
-                <button class="btn btn-sm btn-danger col-2 float-right" (click)="newFiles.splice(i, 1)">
+                <span class="col align-middle">{{ file.filename }}</span>
+                <span *ngIf="file.size === 0; else notEmpty" class="col" tooltip="File is empty and won't be uploaded to server">
+                  <fa-icon [icon]="icons.danger" class="btn btn-sm btn-danger" style="width: 30px"></fa-icon>
+                </span>
+                <ng-template #notEmpty>
+                  <span class="col">
+                    <fa-icon [icon]="icons.success" class="btn btn-sm btn-success" style="width: 30px"></fa-icon>
+                  </span>
+                </ng-template>
+                <button class="btn btn-sm btn-danger col float-right" style="max-width: 100px" (click)="newFiles.splice(i, 1)">
                   <fa-icon [icon]="icons.delete"></fa-icon>
                 </button>
               </div>

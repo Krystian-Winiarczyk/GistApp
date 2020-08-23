@@ -1,26 +1,33 @@
 <div class="container">
   <div class="col-8 mx-auto">
     <h1>Create New Gist</h1>
-      <div class="form-group">
-        <label for="description">Gist Description</label>
-        <textarea class="form-control" id="description" rows="2" [(ngModel)]="description"></textarea>
+    <div class="form-group">
+      <label for="description">Gist Description</label>
+      <textarea class="form-control" id="description" rows="2" [(ngModel)]="description"></textarea>
+    </div>
+    <div class="input-group my-2">
+      <div class="custom-file">
+        <label class="custom-file-label" for="files">Choose files</label>
+        <input type="file" class="custom-file-input" id="files" (change)="onChange($event)" multiple accept="text/*">
       </div>
-      <div class="input-group my-2">
-        <div class="custom-file">
-          <label class="custom-file-label" for="files">Choose files</label>
-          <input type="file" class="custom-file-input" id="files" (change)="onChange($event)" multiple>
+    </div>
+    <div class="list-group col-12 my-2" style="padding: 0">
+      <div class="list-group-item my-1" type="button" *ngFor="let file of files; let i = index">
+        <div class="row">
+          <span class="col-9 align-middle">{{ file.filename }}</span>
+          <button class="btn btn-sm btn-danger col-2 float-right" (click)="files.splice(i, 1)">
+            <fa-icon [icon]="deleteIcon"></fa-icon>
+          </button>
         </div>
       </div>
-      <div class="list-group col-12 my-2" style="padding: 0">
-        <div class="list-group-item" type="button" *ngFor="let file of files; let i = index">
-          <div class="row">
-            <span class="col-10 align-middle">{{ file.filename }}</span>
-            <button class="btn btn-sm btn-danger col-2 float-right" (click)="files.splice(i, 1)">
-              <fa-icon [icon]="deleteIcon"></fa-icon>
-            </button>
-          </div>
-        </div>
+    </div>
+    <button class="btn btn-success" (click)="createGist()">Create Gist</button>
+    <div [ngSwitch]="status">
+      <div *ngSwitchCase="'success'" class="alert alert-success">Gist successfully created</div>
+      <div *ngSwitchCase="'loading'">Loading ...</div>
+      <div *ngSwitchDefault>
+
       </div>
-      <button class="btn btn-success" (click)="createGist()">Create Gist</button>
+    </div>
   </div>
 </div>

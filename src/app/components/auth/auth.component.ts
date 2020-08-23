@@ -11,12 +11,16 @@ export class AuthComponent implements OnInit {
   token: string = "";
   error: boolean = false;
 
-  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute) { }
+  constructor(private authService: AuthService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(param => {
-      if (param["error"]) this.error = true
-    })
+    if (localStorage.getItem("user") && localStorage.getItem("token")) {
+      this.router.navigate(["/gists"]);
+    } else {
+      this.activatedRoute.queryParams.subscribe(param => {
+        if (param["error"]) this.error = true
+      })
+    }
   }
 
   submit() {
