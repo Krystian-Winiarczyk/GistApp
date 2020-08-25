@@ -68,6 +68,8 @@ export class GistDetailsComponent implements OnInit, OnChanges {
       };
       this.gistsService.updateGist(editedGistPayload, this.currentGist.id)
         .subscribe(res => {
+          this.newFiles = [];
+          this.deletedFiles = [];
           this.getGist();
           this.loading = true;
         })

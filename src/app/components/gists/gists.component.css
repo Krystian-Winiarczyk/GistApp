@@ -12,13 +12,4 @@
   bottom: 0;
   left: 50%;
   transform: translateX(calc(-50% - 40px));
-  color: red;
-}
-
-.pagination-bar:hover {
-  color: black;
-}
-
-.pagination-bar a, .pagination-bar button {
-  color: blue !important;
 }

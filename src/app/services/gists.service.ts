@@ -42,6 +42,3 @@ export class GistsService {
     return this.httpClient.patch(`https://api.github.com/gists/${gistId}`, payload);
   }
 }
-// TODO
-// Dodać uwierzytelnianie poprzez podanie tokenu autoryzacji
-// pobrać dane usera przez /user

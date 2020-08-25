@@ -111,7 +111,7 @@
              style="color: rgb(52, 58, 64)">
           <h2 class="h2">History</h2>
           <div class="row px-2">
-            <div class="col-4 my-1" *ngFor="let history of currentGist.history | paginate: { itemsPerPage: 3, currentPage: p }">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 my-1" *ngFor="let history of currentGist.history | paginate: { itemsPerPage: 3, currentPage: p }">
               <div class="card">
                 <div class="card-header text-left">
                   <p class="card-text"><strong>Edited by:</strong> {{ history.user.login }}</p>
@@ -134,7 +134,7 @@
                 </ul>
               </div>
             </div>
-            <div class="pagination-box col-12 pt-4">
+            <div class="pagination-box col-12 pt-4" *ngIf="currentGist.history.length > 3">
               <pagination-controls (pageChange)="p = $event" class="pagination-bar"></pagination-controls>
             </div>
           </div>
