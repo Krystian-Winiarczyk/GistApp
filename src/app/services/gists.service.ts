@@ -36,13 +36,10 @@ export class GistsService {
 
   createGist(payload) {
     return this.httpClient.post(`https://api.github.com/gists`, payload);
-<<<<<<< HEAD
   }
 
   updateGist(payload, gistId) {
     return this.httpClient.patch(`https://api.github.com/gists/${gistId}`, payload);
-=======
->>>>>>> 55367726084731b7b2263c383e8b2d238042f16e
   }
 }
 // TODO

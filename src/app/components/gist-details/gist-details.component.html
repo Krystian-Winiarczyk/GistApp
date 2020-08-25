@@ -4,7 +4,7 @@
 
 <ng-template #details>
   <div class="row mt-4">
-    <div class="w-100 custom-card col-10 mx-auto">
+    <div class="w-100 custom-card col-11 col-sm-9 col-md-10 col-lg-8 mx-auto">
       <div class="bg-dark text-white p-2">
         <div class="row">
           <div class="col-12 col-sm-12 col-lg-8">
@@ -56,8 +56,8 @@
             <input [(ngModel)]="currentGist.description" *ngIf="isEdited" class="form-control w-100"/>
           </div>
         </div>
-        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center"
-             style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
+        <div class="col-12 px-4 my-3 text-center"
+             style="color: rgb(52, 58, 64)">
           <h2 class="h2">Files</h2>
           <table class="table">
             <thead class="thead-dark">
@@ -107,9 +107,37 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-12 col-lg-6 col-md-12 my-3 text-center"
-             style="border-right: 2px solid #ddd; color: rgb(52, 58, 64)">
-          <h2 class="h2">Comments</h2>
+        <div class="col-12 my-3 text-center"
+             style="color: rgb(52, 58, 64)">
+          <h2 class="h2">History</h2>
+          <div class="row px-2">
+            <div class="col-4 my-1" *ngFor="let history of currentGist.history | paginate: { itemsPerPage: 3, currentPage: p }">
+              <div class="card">
+                <div class="card-header text-left">
+                  <p class="card-text"><strong>Edited by:</strong> {{ history.user.login }}</p>
+                  <p class="card-text"><strong>Commited at:</strong> {{ history.committed_at | date: "short" }}</p>
+                </div>
+                <span class="py-2">Change Status:</span>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Additions:
+                    <span class="badge badge-primary badge-pill">{{ history.change_status.additions }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Deletions:
+                    <span class="badge badge-primary badge-pill">{{ history.change_status.deletions }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Total:
+                    <span class="badge badge-primary badge-pill">{{ history.change_status.total }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="pagination-box col-12 pt-4">
+              <pagination-controls (pageChange)="p = $event" class="pagination-bar"></pagination-controls>
+            </div>
+          </div>
         </div>
       </div>
     </div>

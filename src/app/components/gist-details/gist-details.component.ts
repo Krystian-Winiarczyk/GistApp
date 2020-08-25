@@ -25,6 +25,8 @@ export class GistDetailsComponent implements OnInit, OnChanges {
   description: string = '';
   newFiles: any[] = [];
   deletedFiles: any[] = [];
+  p: number = 1;
+
 
   constructor(private activatedRoute: ActivatedRoute, private gistsService: GistsService, private router: Router) {
     this.currentUserId = JSON.parse(localStorage.getItem("user")).id;
@@ -79,6 +81,7 @@ export class GistDetailsComponent implements OnInit, OnChanges {
   private getGist() {
     this.gistsService.getGist(this.activatedRoute.snapshot.params.gist_id)
       .subscribe(res => {
+        console.log(res);
         const response = res;
         const files = [];
         for (let fileName in res.files) {
@@ -95,9 +98,3 @@ export class GistDetailsComponent implements OnInit, OnChanges {
   }
 }
 
-//TODO
-// dodać opis w razie braku
-<<<<<<< HEAD
-=======
-// filtr pustch plikow 
->>>>>>> 55367726084731b7b2263c383e8b2d238042f16e
