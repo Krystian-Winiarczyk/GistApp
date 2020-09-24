@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {GistsService} from '../../services/gists.service';
 import {fileUpload, prepareFiles} from '../../shared/files';
-import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faCheck, faExclamation, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
+import {FeedbackModel} from '../../models/Feedback.model';
 
 @Component({
   selector: 'app-add-gist',
@@ -11,9 +12,11 @@ import {Router} from '@angular/router';
 })
 export class AddGistComponent implements OnInit {
   description: string = '';
+  dangerIcon = faExclamation;
+  successIcon = faCheck;
   deleteIcon = faTrash;
   files = [];
-  status: string = '';
+  feedback: FeedbackModel = null;
 
   constructor(private gistsService: GistsService, private router: Router) {
   }
@@ -36,13 +39,15 @@ export class AddGistComponent implements OnInit {
       };
       this.gistsService.createGist(payload)
         .subscribe(res => {
-          this.status = "success";
+          this.feedback = new FeedbackModel("success", "Gist Created Successfully")
           setTimeout(() => {
             this.router.navigate(['/gists']);
           }, 2000);
+        }, error => {
+          this.feedback = new FeedbackModel("error", error.message);
         });
     } else {
-      alert('All Selected Files Are Empty');
+      this.feedback = new FeedbackModel("error", "All Selected Files Are Empty")
     }
   }
 

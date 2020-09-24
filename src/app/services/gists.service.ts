@@ -5,6 +5,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
   providedIn: 'root'
 })
 export class GistsService {
+
   constructor(private httpClient: HttpClient) { }
 
   getGists() {
@@ -26,12 +27,7 @@ export class GistsService {
   }
 
   deleteGist(id: string) {
-    this.httpClient.delete(`https://api.github.com/gists/${id}`)
-      .subscribe(xd => {
-        console.log(xd);
-      }, err => {
-        console.log(err);
-      })
+    return this.httpClient.delete(`https://api.github.com/gists/${id}`)
   }
 
   createGist(payload) {

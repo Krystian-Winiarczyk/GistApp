@@ -12,21 +12,32 @@
       </div>
     </div>
     <div class="list-group col-12 my-2" style="padding: 0">
-      <div class="list-group-item my-1" type="button" *ngFor="let file of files; let i = index">
+      <div class="list-group-item" type="button" *ngFor="let file of files; let i = index">
         <div class="row">
           <span class="col-9 align-middle">{{ file.filename }}</span>
-          <button class="btn btn-sm btn-danger col-2 float-right" (click)="files.splice(i, 1)">
+          <span *ngIf="file.size === 0; else notEmpty" class="col-1"
+                tooltip="File is empty and won't be uploaded to server">
+                  <fa-icon [icon]="dangerIcon" class="btn btn-sm btn-danger" style="width: 30px"></fa-icon>
+                </span>
+          <ng-template #notEmpty>
+                  <span class="col-1">
+                    <fa-icon [icon]="successIcon" class="btn btn-sm btn-success" style="width: 30px"></fa-icon>
+                  </span>
+          </ng-template>
+          <button class="btn btn-sm btn-danger col-2 float-right" style="max-width: 100px"
+                  (click)="files.splice(i, 1)">
             <fa-icon [icon]="deleteIcon"></fa-icon>
           </button>
         </div>
       </div>
     </div>
     <button class="btn btn-success" (click)="createGist()">Create Gist</button>
-    <div [ngSwitch]="status">
-      <div *ngSwitchCase="'success'" class="alert alert-success">Gist successfully created</div>
-      <div *ngSwitchCase="'loading'">Loading ...</div>
-      <div *ngSwitchDefault>
-
+    <div *ngIf="feedback">
+      <div class="p-2 mt-2" [ngClass]="{
+        'alert-danger': feedback.type === 'error',
+        'alert-success': feedback.type === 'success'
+        }">
+        {{ feedback.message }}
       </div>
     </div>
   </div>

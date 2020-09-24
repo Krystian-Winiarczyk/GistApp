@@ -3,7 +3,10 @@
 </div>
 
 <ng-template #gistsList>
-  <div class="container">
+  <div *ngIf="feedBack && feedBack.type === 'error'">
+    <div class="alert alert-danger p-2 mb-2">{{ feedBack.message }}</div>
+  </div>
+  <div class="container pb-5">
     <div class="row">
       <div *ngFor="let gist of gists | paginate: { itemsPerPage: 9, currentPage: p }; index as i"
            class="col-sm-12 col-lg-4 col-md-6 my-3">

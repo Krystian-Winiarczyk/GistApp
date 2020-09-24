@@ -1,16 +1,17 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GistsService} from '../../services/gists.service';
 import {faCheck, faEdit, faExclamation, faPlus, faSave, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {fileUpload, prepareFiles} from '../../shared/files';
+import {FeedbackModel} from '../../models/Feedback.model';
 
 @Component({
   selector: 'app-gist-details',
   templateUrl: './gist-details.component.html',
   styleUrls: ['./gist-details.component.css']
 })
-export class GistDetailsComponent implements OnInit, OnChanges {
-  private icons = {
+export class GistDetailsComponent implements OnInit {
+  icons = {
     edit: faEdit,
     delete: faTrash,
     save: faSave,
@@ -18,7 +19,8 @@ export class GistDetailsComponent implements OnInit, OnChanges {
     danger: faExclamation,
     success: faCheck
   };
-  private currentUserId: string = null;
+  currentUserId: string = null;
+  feedback: FeedbackModel = null;
   currentGist: any = null;
   loading: boolean = true;
   isEdited: boolean = false;
@@ -72,6 +74,9 @@ export class GistDetailsComponent implements OnInit, OnChanges {
           this.deletedFiles = [];
           this.getGist();
           this.loading = true;
+          this.feedback = new FeedbackModel("success", "Gist updated successfully");
+        }, error => {
+          this.feedback = new FeedbackModel("error", error.message);
         })
     }
   }
@@ -83,7 +88,6 @@ export class GistDetailsComponent implements OnInit, OnChanges {
   private getGist() {
     this.gistsService.getGist(this.activatedRoute.snapshot.params.gist_id)
       .subscribe(res => {
-        console.log(res);
         const response = res;
         const files = [];
         for (let fileName in res.files) {
@@ -92,11 +96,9 @@ export class GistDetailsComponent implements OnInit, OnChanges {
         response.files = files;
         this.currentGist = response;
         this.loading = false;
+      }, error => {
+        this.feedback = new FeedbackModel("error", error.message);
       });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
 }
 
